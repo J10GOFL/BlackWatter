@@ -1,5 +1,6 @@
 fileFormatVersion: 2
 guid: 1b92b31acbcdce24ba9dc6d01dbc2e84
+<<<<<<< HEAD
 AssetOrigin:
   serializedVersion: 1
   productId: 187052
@@ -11,6 +12,12 @@ TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
   serializedVersion: 13
+=======
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+>>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
@@ -27,12 +34,18 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+<<<<<<< HEAD
     flipGreenChannel: 0
   isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
   ignoreMipmapLimit: 0
+=======
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+>>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -41,12 +54,21 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
+<<<<<<< HEAD
     filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 0
     wrapV: 0
     wrapW: 0
+=======
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: -1
+    wrapV: -1
+    wrapW: -1
+>>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
   nPOTScale: 1
   lightmap: 0
   compressionQuality: 50
@@ -64,6 +86,7 @@ TextureImporter:
   textureType: 0
   textureShape: 1
   singleChannelComponent: 0
+<<<<<<< HEAD
   flipbookRows: 1
   flipbookColumns: 1
   maxTextureSizeSet: 0
@@ -75,6 +98,14 @@ TextureImporter:
   cookieLightType: 1
   platformSettings:
   - serializedVersion: 4
+=======
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+>>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -84,10 +115,16 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+<<<<<<< HEAD
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+=======
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+>>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -97,11 +134,18 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+<<<<<<< HEAD
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: WindowsStoreApps
+=======
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+>>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -110,10 +154,16 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+<<<<<<< HEAD
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+=======
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+>>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -123,10 +173,16 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+<<<<<<< HEAD
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+=======
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+>>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -136,14 +192,20 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+<<<<<<< HEAD
     ignorePlatformSupport: 0
+=======
+>>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites: []
     outline: []
+<<<<<<< HEAD
     customData: 
+=======
+>>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
     physicsShape: []
     bones: []
     spriteID: 
@@ -153,6 +215,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+<<<<<<< HEAD
     spriteCustomMetadata:
       entries: []
     nameFileIdTable: {}
@@ -161,3 +224,18 @@ TextureImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+=======
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 187052
+  packageName: Low Poly Environment - Nature Free - LOWPOLY MEDIEVAL FANTASY SERIES
+  packageVersion: 1.1.1
+  assetPath: Assets/Polytope Studio/Lowpoly_Environments/Sources/Textures/PT_Grass_01.png
+  uploadId: 916120
+>>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2

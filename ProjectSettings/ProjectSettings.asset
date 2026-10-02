@@ -829,6 +829,7 @@ PlayerSettings:
   webGLCloseOnQuit: 0
   webWasm2023: 1
   webEnableSubmoduleStrippingCompatibility: 0
+<<<<<<< HEAD
   scriptingDefineSymbols:
     Android: UNITY_POST_PROCESSING_STACK_V2
     EmbeddedLinux: UNITY_POST_PROCESSING_STACK_V2
@@ -846,6 +847,9 @@ PlayerSettings:
     WebGL: UNITY_POST_PROCESSING_STACK_V2
     XboxOne: UNITY_POST_PROCESSING_STACK_V2
     tvOS: UNITY_POST_PROCESSING_STACK_V2
+=======
+  scriptingDefineSymbols: {}
+>>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
