@@ -2,14 +2,8 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-<<<<<<< HEAD
   serializedVersion: 3
-  tags:
-  - CinemachineTarget
-=======
-  serializedVersion: 2
   tags: []
->>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
   layers:
   - Default
   - TransparentFX
@@ -20,11 +14,7 @@ TagManager:
   - 
   - 
   - 
-<<<<<<< HEAD
-  - Glow
-=======
   - 
->>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
   - 
   - 
   - 
@@ -53,38 +43,4 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
-  - Light Layer 1
-  - Light Layer 2
-  - Light Layer 3
-  - Light Layer 4
-  - Light Layer 5
-  - Light Layer 6
-  - Light Layer 7
-<<<<<<< HEAD
   m_MigratedRenderPipelines: []
-=======
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
->>>>>>> abdc0276ed7b4a94343f25f54d8c986893e7b3e2
