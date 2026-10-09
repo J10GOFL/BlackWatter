@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0.3
+  m_AmbientIntensity: 0.7
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: f2b5f3f20933f434e850db1b710542fd, type: 2}
@@ -251475,11 +251475,20 @@ MonoBehaviour:
   controller: {fileID: 564371790}
   cam: {fileID: 819402719}
   anim: {fileID: 564371788}
+  cameraFollow: {fileID: 0}
   walkSpeed: 5
   runSpeed: 10
+  acceleration: 25
+  deceleration: 35
+  airControl: 0.35
+  turnSpeed: 720
+  aimMouseButton: 1
+  aimLayers:
+    serializedVersion: 2
+    m_Bits: 51
+  aimRayDistance: 500
   gravity: -9.81
   jumpHeight: 1.5
-  turnSmoothTime: 0.1
 --- !u!143 &564371790
 CharacterController:
   m_ObjectHideFlags: 0
@@ -267445,6 +267454,27 @@ MonoBehaviour:
   distance: 5
   heightOffset: 1.5
   mouseSensitivity: 3
+  minPitch: -30
+  maxPitch: 65
+  isometricHeight: 10
+  isometricDistance: 10
+  isometricYaw: 45
+  isometricZoomSpeed: 5
+  minIsometricDistance: 5
+  maxIsometricDistance: 18
+  isometricRotationStep: 45
+  rotateIsometricLeftKey: 113
+  rotateIsometricRightKey: 101
+  isometricCursor: {fileID: 0}
+  cursorHotspot: {x: 12, y: 12}
+  collisionLayers:
+    serializedVersion: 2
+    m_Bits: 51
+  collisionRadius: 0.2
+  collisionPadding: 0.08
+  positionSmoothTime: 0.08
+  rotationSharpness: 15
+  switchKey: 118
 --- !u!114 &819402716
 MonoBehaviour:
   m_ObjectHideFlags: 0
