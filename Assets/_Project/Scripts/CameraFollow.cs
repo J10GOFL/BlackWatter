@@ -14,6 +14,16 @@ public class CameraFollow : MonoBehaviour
     [Min(0f)] public float mouseSensitivity = 3f;
     public float minPitch = -30f;
     public float maxPitch = 65f;
+    [Min(0.1f)] public float minThirdPersonDistance = 2.5f;
+    [Min(0.1f)] public float maxThirdPersonDistance = 8f;
+    [Min(0f)] public float thirdPersonZoomSpeed = 2f;
+
+    [Header("Respuesta al Movimiento")]
+    [Min(0f)] public float movementLookAheadDistance = 0.15f;
+    [Min(0.01f)] public float movementLookAheadSmoothTime = 0.2f;
+    [Tooltip("Balanceo muy leve al correr. No se aplica durante el salto.")]
+    [Min(0f)] public float runSwayAmount = 0.015f;
+    [Min(0f)] public float runSwayFrequency = 7f;
 
     [Header("Vista Isométrica")]
     public float isometricHeight = 10f;
@@ -40,6 +50,7 @@ public class CameraFollow : MonoBehaviour
     [Header("Suavizado de Cámara")]
     [Min(0f)] public float positionSmoothTime = 0.08f;
     [Min(0f)] public float rotationSharpness = 15f;
+    [Min(0f)] public float collisionRecoverySmoothTime = 0.22f;
 
     [Header("Cambio de Cámara")]
     [Tooltip("Alterna entre tercera persona e isométrica.")]
@@ -50,6 +61,14 @@ public class CameraFollow : MonoBehaviour
     private float thirdPersonYaw;
     private float thirdPersonPitch;
     private Vector3 positionVelocity;
+    private Vector3 targetMovement;
+    private Vector3 movementLookAhead;
+    private Vector3 movementLookAheadVelocity;
+    private Vector3 previousTargetPosition;
+    private bool hasPreviousTargetPosition;
+    private bool recoveringFromCollision;
+    private float runSwayTime;
+    private CharacterController targetController;
     private Texture2D generatedCursor;
     private readonly RaycastHit[] collisionHits = new RaycastHit[24];
 
@@ -68,6 +87,16 @@ public class CameraFollow : MonoBehaviour
 
     void Start()
     {
+        if (target != null)
+        {
+            targetController = target.GetComponentInParent<CharacterController>();
+            if (targetController == null)
+                targetController = target.GetComponentInChildren<CharacterController>();
+
+            previousTargetPosition = target.position;
+            hasPreviousTargetPosition = true;
+        }
+
         thirdPersonYaw = transform.eulerAngles.y;
         thirdPersonPitch = transform.eulerAngles.x;
 
@@ -97,6 +126,16 @@ public class CameraFollow : MonoBehaviour
                 minPitch,
                 maxPitch
             );
+
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            if (Mathf.Abs(scroll) > 0.001f)
+            {
+                distance = Mathf.Clamp(
+                    distance - scroll * thirdPersonZoomSpeed,
+                    minThirdPersonDistance,
+                    maxThirdPersonDistance
+                );
+            }
         }
         else
         {
@@ -108,6 +147,8 @@ public class CameraFollow : MonoBehaviour
     {
         if (target == null)
             return;
+
+        ActualizarMovimientoObjetivo();
 
         if (cameraMode == 0)
             UpdateThirdPersonCamera();
@@ -171,11 +212,55 @@ public class CameraFollow : MonoBehaviour
             0f
         );
 
-        Vector3 focus = target.position + Vector3.up * heightOffset;
+        Vector3 lookAheadTarget = Vector3.zero;
+        if (targetMovement.sqrMagnitude > 0.04f)
+            lookAheadTarget = targetMovement.normalized * movementLookAheadDistance;
+
+        movementLookAhead = Vector3.SmoothDamp(
+            movementLookAhead,
+            lookAheadTarget,
+            ref movementLookAheadVelocity,
+            movementLookAheadSmoothTime
+        );
+
+        Vector3 focus = target.position + Vector3.up * heightOffset + movementLookAhead;
         Vector3 desiredPosition =
             focus - rotation * Vector3.forward * distance;
 
+        bool estaEnSuelo = targetController == null || targetController.isGrounded;
+        bool estaCorriendo = estaEnSuelo &&
+                             Input.GetKey(KeyCode.LeftShift) &&
+                             targetMovement.sqrMagnitude > 1f;
+
+        if (estaCorriendo && runSwayAmount > 0f)
+        {
+            runSwayTime += Time.deltaTime * runSwayFrequency;
+            float balanceoVertical = Mathf.Sin(runSwayTime * 2f) * runSwayAmount;
+            float balanceoLateral = Mathf.Sin(runSwayTime) * runSwayAmount * 0.5f;
+            desiredPosition += Vector3.up * balanceoVertical +
+                               rotation * Vector3.right * balanceoLateral;
+        }
+
         MoveCamera(focus, desiredPosition, rotation);
+    }
+
+    /// <summary>Calcula el desplazamiento horizontal del objetivo para la cámara.</summary>
+    void ActualizarMovimientoObjetivo()
+    {
+        if (!hasPreviousTargetPosition)
+        {
+            previousTargetPosition = target.position;
+            hasPreviousTargetPosition = true;
+            targetMovement = Vector3.zero;
+            return;
+        }
+
+        Vector3 desplazamiento = target.position - previousTargetPosition;
+        desplazamiento.y = 0f;
+        targetMovement = Time.deltaTime > 0f
+            ? desplazamiento / Time.deltaTime
+            : Vector3.zero;
+        previousTargetPosition = target.position;
     }
 
     /// <summary>Coloca la cámara isométrica con orientación independiente del mouse.</summary>
@@ -221,19 +306,38 @@ public class CameraFollow : MonoBehaviour
         {
             transform.position = safePosition;
             positionVelocity = Vector3.zero;
+            recoveringFromCollision = true;
         }
-        else if (positionSmoothTime <= 0f)
+        else if (positionSmoothTime <= 0f && !recoveringFromCollision)
         {
             transform.position = desiredPosition;
         }
         else
         {
-            transform.position = Vector3.SmoothDamp(
-                transform.position,
-                desiredPosition,
-                ref positionVelocity,
-                positionSmoothTime
-            );
+            float tiempoSuavizado = recoveringFromCollision
+                ? collisionRecoverySmoothTime
+                : positionSmoothTime;
+
+            if (tiempoSuavizado <= 0f)
+            {
+                transform.position = desiredPosition;
+                recoveringFromCollision = false;
+            }
+            else
+            {
+                transform.position = Vector3.SmoothDamp(
+                    transform.position,
+                    desiredPosition,
+                    ref positionVelocity,
+                    tiempoSuavizado
+                );
+
+                if (recoveringFromCollision &&
+                    (transform.position - desiredPosition).sqrMagnitude < 0.0025f)
+                {
+                    recoveringFromCollision = false;
+                }
+            }
         }
 
         float rotationStep =

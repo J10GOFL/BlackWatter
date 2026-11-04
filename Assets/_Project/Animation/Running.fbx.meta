@@ -36,7 +36,7 @@ ModelImporter:
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 32
+      lastFrame: 19
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -55,7 +55,21 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.28787878
+        functionName: Paso1
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: ac873b76590e3844880b4d0af948fa11, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.7651515
+        functionName: Paso2
+        data: 
+        objectReferenceParameter: {fileID: 8300000, guid: 6bc60d984d185b54c8cddc6e1413d42a, type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
