@@ -32,11 +32,18 @@ public class PlayerMovement : MonoBehaviour
     [Header("Salto y Gravedad")]
     public float gravity = -20f;
     public float jumpHeight = 1.5f;
+    [Min(0f)] public float retrasoImpulsoSalto = 0.05f;
 
     private Camera playerCamera;
     private Vector3 planarVelocity;
     private float verticalVelocity;
     private bool isGrounded;
+    private bool saltoPendiente;
+    private bool saltoEnCurso;
+    private bool saltoDespegado;
+    private float tiempoImpulsoSalto;
+    private float tiempoLimiteDespegueSalto;
+    private const float tiempoMaximoDespegueSalto = 0.3f;
     private readonly RaycastHit[] aimHits = new RaycastHit[32];
 
     /// <summary>Indica si el jugador mantiene el botón de apuntado en isométrica.</summary>
@@ -143,13 +150,29 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>Lee el estado del CharacterController y actualiza el Animator.</summary>
     void UpdateGroundedState()
     {
-        isGrounded = controller.isGrounded;
+        bool contactoSuelo = controller.isGrounded;
+
+        if (saltoEnCurso)
+        {
+            if (!contactoSuelo)
+                saltoDespegado = true;
+            else if (saltoDespegado || Time.time >= tiempoLimiteDespegueSalto)
+            {
+                saltoEnCurso = false;
+                saltoDespegado = false;
+            }
+        }
+
+        isGrounded = contactoSuelo;
 
         if (isGrounded && verticalVelocity < 0f)
             verticalVelocity = -2f;
 
         if (anim != null)
-            anim.SetBool("IsGrounded", isGrounded);
+        {
+            bool sueloParaAnimacion = isGrounded && !saltoPendiente && !saltoEnCurso;
+            anim.SetBool("IsGrounded", sueloParaAnimacion);
+        }
     }
 
     /// <summary>Gira hacia WASD o hacia el cursor según el estado de apuntado.</summary>
@@ -290,11 +313,27 @@ public class PlayerMovement : MonoBehaviour
     /// <summary>Aplica salto al pulsar Espacio y gravedad en cada frame.</summary>
     void HandleJumpAndGravity()
     {
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && isGrounded && !saltoPendiente && !saltoEnCurso)
         {
-            verticalVelocity = Mathf.Sqrt(
-                jumpHeight * -2f * gravity
-            );
+            saltoPendiente = true;
+            tiempoImpulsoSalto = Time.time + retrasoImpulsoSalto;
+
+            // Inicia la animación de salto mientras el personaje sigue en el suelo.
+            if (anim != null)
+                anim.SetBool("IsGrounded", false);
+        }
+
+        if (saltoPendiente && Time.time >= tiempoImpulsoSalto)
+        {
+            saltoPendiente = false;
+
+            if (isGrounded)
+            {
+                verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                saltoEnCurso = true;
+                saltoDespegado = false;
+                tiempoLimiteDespegueSalto = Time.time + tiempoMaximoDespegueSalto;
+            }
         }
 
         verticalVelocity += gravity * Time.deltaTime;
